@@ -1,0 +1,220 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API ATM REST services",
+    "version": "1.0",
+    "title": "Test ATM service"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "atm-rest-controller",
+      "description": "ATM Rest Controller"
+    }
+  ],
+  "paths": {
+    "/atm/balance": {
+      "get": {
+        "tags": [
+          "atm-rest-controller"
+        ],
+        "summary": "getBalance",
+        "operationId": "getBalanceUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "account_number",
+            "in": "header",
+            "description": "account_number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pin",
+            "in": "header",
+            "description": "pin",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BalanceResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/atm/withdrawal": {
+      "post": {
+        "tags": [
+          "atm-rest-controller"
+        ],
+        "summary": "getWithdrawal",
+        "operationId": "getWithdrawalUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "account_number",
+            "in": "header",
+            "description": "account_number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "amount",
+            "in": "header",
+            "description": "amount",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pin",
+            "in": "header",
+            "description": "pin",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WithdrawalResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/atm/overdraft": {
+      "get": {
+        "tags": [
+          "atm-rest-controller"
+        ],
+        "summary": "getoverdraft",
+        "operationId": "getoverdraftUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "account_number",
+            "in": "header",
+            "description": "account_number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pin",
+            "in": "header",
+            "description": "pin",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OverdraftResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "OverdraftResponse": {
+      "type": "object",
+      "properties": {
+        "WithdrawalLimit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "OverdraftResponse"
+    },
+    "BalanceResponse": {
+      "type": "object",
+      "properties": {
+        "availableWithdrawal": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "balance": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "BalanceResponse"
+    },
+    "WithdrawalResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "withdrawal": {
+          "type": "string"
+        }
+      },
+      "title": "WithdrawalResponse"
+    }
+  }
+}
