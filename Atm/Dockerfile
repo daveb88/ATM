@@ -50,7 +50,5 @@ COPY --from=builder build/$APP_NAME/layers/dependencies/ ./
 COPY --from=builder build/$APP_NAME/layers/spring-boot-loader/ ./
 COPY --from=builder build/$APP_NAME/layers/snapshot-dependencies/ ./
 COPY --from=builder build/$APP_NAME/layers/application/ ./
-COPY --from=builder build/$APP_NAME/config config/
-RUN chown $USERNAME config/
 USER $USERNAME
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
