@@ -1,4 +1,5 @@
 
+
 # interview-assessment
 
 ## ATM machine
@@ -107,4 +108,41 @@ there is already a docker file and a h2 database included
 
 
 
+**Flow**
 
+
+
+## UML diagrams
+
+* if client has saving to withdraw
+
+```mermaid
+sequenceDiagram
+withdraw ->> check-balance: before giving money let check the saving 
+check-balance ->> savings : do i have enought in my saving 
+savings->> check-balance: yes i do  
+check-balance ->> withdraw:here your money 
+```
+
+* if client doesnot  saving to withdraw but do have overdraft
+```mermaid
+sequenceDiagram
+withdraw ->> check-balance: before giving money let check the saving 
+check-balance ->> savings : do i have enought in my saving 
+savings -->> check-balance: No you dont 
+check-balance-->> check-overdraft: what is my overdraft
+check-overdraft -->> check-balance: your overdaft can allow this 
+check-balance -->> withdraw:you can withdraw this amout from your overdaft
+ 
+```
+* if client does not  saving to withdraw or overdraft
+```mermaid
+sequenceDiagram
+withdraw ->> check-balance: before giving money let check the saving 
+check-balance ->> savings : do i have enought in my saving 
+savings -->> check-balance: No you dont 
+check-balance-->> check-overdraft: what is my overdraft
+check-overdraft -->> check-balance: your overdaft wont allow this
+check-balance -->> withdraw:you cant withdraw this amout 
+ 
+```
