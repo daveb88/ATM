@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: jdbc:mysql://db:3306/atmdb?createDatabaseIfNotExist=true&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
