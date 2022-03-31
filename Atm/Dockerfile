@@ -1,6 +1,6 @@
 # To build and run:
 #docker build -t collector:openj9 .
-#docker run --rm -p 8080:8080 -p 8081:8081 --name collector-openj9 -d collector:openj9
+#docker run --rm -p 8080:8080 -p 8081:8081 --name atm-latest -d atm:latest
 
 ARG APP_NAME="Atm-0.0.1-SNAPSHOT"
 ################ STAGE: BUILD ##################

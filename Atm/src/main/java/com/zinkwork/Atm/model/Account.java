@@ -1,2 +1,4 @@
-package com.zinkwork.Atm.model;public class Account {
+package com.zinkwork.Atm.model;
+
+public class Account {
 }
