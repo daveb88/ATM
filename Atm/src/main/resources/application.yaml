@@ -1,36 +1,36 @@
 server:
-  port:8080
+  port: 8080
   error:
-    include-exception:on
-    include-stacktrace:never
+    include-exception: on
+    include-stacktrace: never
 spring:
   main:
-  banner-mode:off
+    banner-mode: off
 application:
-  name:atm-backend
+  name: atm-backend
 datasource:
-  url:jdbc:mysql://localhost:3306/atmdb?createDatabaseIfNotExist=true&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
-  username:root
-  password:admin
-  platform:mysql
-  initialization-mode:always
-  data:classpath:db/*.sql
+  url: jdbc:mysql://localhost:3306/atmdb?createDatabaseIfNotExist=true&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+  username: root
+  password: admin
+  platform: mysql
+  initialization-mode: always
+  data:classpath: db/*.sql
 jpa:
-  show-sql:on
-  generate-ddl:on
+  show-sql: on
+  generate-ddl: on
 hibernate:
-  ddl-auto:create-drop
+  ddl-auto: create-drop
 properties.hibernate:
-  format_sql:true
-  use_sql_comments:true
+  format_sql: true
+  use_sql_comments: true
 springdoc:
-  override-with-generic-response:false
-  default-produces-media-type:application/json
-  pathsToMatch:/atm/balance/**
+  override-with-generic-response: false
+  default-produces-media-type: application/json
+  pathsToMatch: /atm/balance/**
 api-docs:
-  path:/api-docs
+  path: /api-docs
 logging:
 level:
-  root:off
-  sql:trace
-  org.springframework.jdbc.datasource:trace
+  root: off
+  sql: trace
+  org.springframework.jdbc.datasource: trace

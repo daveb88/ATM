@@ -1,28 +1,66 @@
 package com.zinkwork.Atm.model;
 
-import lombok.Builder;
+import com.zinkwork.Atm.exception.InsufficientFundsException;
+import com.zinkwork.Atm.exception.ResourceNotFoundException;
+import lombok.Getter;
+import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
-@Builder
-public class Account {
-    private final String accountNumber;
-    private final String pin;
-    private final BigDecimal openingBalance;
-    private final BigDecimal overdraft;
+@Getter
+@Repository
+public class Bank {
+    List<Account> accountList = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        StringBuilder accountInfo = new StringBuilder();
+    public Bank() {
+        Account account1 = new Account("123456789", "1234", 800, -200);
+        Account account2 = new Account("987654321", "4321", 1230, -150);
 
-        accountInfo.append("AccountInfo {");
-        accountInfo.append("Account Number: ").append(accountNumber);
-        accountInfo.append("Opening Balance: £").append(openingBalance.setScale(2, RoundingMode.HALF_EVEN));
-        accountInfo.append("Overdraft: £").append(overdraft.setScale(2, RoundingMode.HALF_EVEN));
-        accountInfo.append("}");
-
-        return accountInfo.toString();
+        accountList.add(account1);
+        accountList.add(account2);
     }
 
+    public Bank(List<Account> accountList) {
+        this.accountList = accountList;
+    }
+
+    public boolean validatePin(String accountNumber, String pin) {
+        return accountList.stream()
+                .filter(account -> accountNumber.equals(account.getAccountNumber()))
+                .anyMatch(account -> pin.equals(account.getPin()));
+    }
+
+    public Account getAccount(String accountId) {
+        try {
+            return accountList.stream()
+                    .filter(account -> accountId.equals(account.getAccountNumber()))
+                    .findFirst().get();
+        } catch (NoSuchElementException e) {
+            throw new ResourceNotFoundException("Account not found");
+        }
+    }
+
+    public boolean checkFunds(String accountNumber, Integer amount) {
+        int currentOpeningBalance = getAccount(accountNumber).getBalance();
+        int overdraftLimit = getAccount(accountNumber).getOverdraftLimit();
+
+        int updatedBalance = currentOpeningBalance - amount;
+        if (updatedBalance >= overdraftLimit) {
+            return true;
+        } else {
+            throw new InsufficientFundsException("You have insufficient funds in your account.");
+        }
+    }
+
+    public Integer withdrawFunds(String accountNumber, Integer amount) {
+            for (Account acc : accountList) {
+                if (accountNumber.equals(acc.getAccountNumber())) {
+                    acc.setBalance(acc.getBalance() - amount);
+                    return acc.getBalance();
+                }
+            }
+        return null;
+    }
 }
